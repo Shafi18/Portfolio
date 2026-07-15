@@ -105,7 +105,7 @@ export default function App() {
         setShowCMS(true);
         // Clean the URL silently so the user does not see it persistently in the address bar
         try {
-          window.history.replaceState(null, '', '/');
+          window.history.replaceState(null, '', import.meta.env.BASE_URL);
         } catch (err) {
           console.warn('URL clean reset bypassed:', err);
         }
