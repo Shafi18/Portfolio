@@ -1,0 +1,36 @@
+# One-off: generates package-lock.json (the committed one is empty). Remove after it runs.
+name: Generate lockfile
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  lockfile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Generate lockfile
+        run: |
+          rm -f package-lock.json
+          npm install --package-lock-only --ignore-scripts
+          npm ci --ignore-scripts
+          npm run build
+
+      - name: Commit lockfile
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add package-lock.json
+          git commit -m "Add generated package-lock.json"
+          git push
