@@ -1,20 +1,40 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
-</div>
+# Portfolio — Shafik Mohamed R
 
-# Run and deploy your AI Studio app
+Interactive personal portfolio: career timeline, delivery metrics, domain expertise, success stories and a meeting scheduler.
 
-This contains everything you need to run your app locally.
+**Live:** https://shafi18.github.io/Portfolio/
 
-View your app in AI Studio: https://ai.studio/apps/44dd23c6-d8f4-4978-8ff9-f94f04944c6c
+![Deploy](https://github.com/Shafi18/Portfolio/actions/workflows/deploy.yml/badge.svg)
 
-## Run Locally
+| | |
+|---|---|
+| **Stack** | React 19 · TypeScript · Vite · Tailwind CSS 4 · Motion |
+| **Hosting** | GitHub Pages via GitHub Actions (OIDC, least-privilege) |
+| **Analytics** | Google Analytics (optional, via `VITE_GA_MEASUREMENT_ID`) |
 
-**Prerequisites:**  Node.js
+## Structure
 
+```
+src/
+├── App.tsx            # Layout, routing between views
+├── data.ts            # Portfolio content (single source of truth)
+├── components/
+│   ├── Hero, Navbar, Footer
+│   ├── Timeline, Metrics, Domains, TechArraySection, SuccessStories
+│   └── SchedulerModal, ConfirmationView, BookedMeetingsView
+└── lib/gtag.ts        # Analytics helper
+```
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+## Run locally
+
+```bash
+npm ci
+cp .env.example .env.local   # fill in values; never commit this file
+npm run dev                  # http://localhost:3000
+```
+
+## Security notes
+
+- `.env*` files are git-ignored; only `.env.example` (placeholders) is committed.
+- Any variable prefixed `VITE_` is bundled into public JavaScript — never put secrets there.
+- Dependencies and Actions are kept current by Dependabot.
